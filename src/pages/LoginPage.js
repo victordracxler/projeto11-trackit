@@ -1,30 +1,49 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import logo from "../imgs/Group8.png";
 
 export default function LoginPage() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  function handleLogin(e) {
+    e.preventDefault();
+  }
+
   return (
     <LoginWrapper>
       <LogoImg src={logo} alt="logo TrackIt" />
 
-      <LoginForm action="">
-        <LoginInput type="email" placeholder="email" />
-        <LoginInput type="password" placeholder="senha" />
+      <LoginForm onSubmit={handleLogin}>
+        <LoginInput
+          type="email"
+          placeholder="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+        />
+        <LoginInput
+          type="password"
+          placeholder="senha"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+        />
         <LoginBttn type="submit">Entrar</LoginBttn>
       </LoginForm>
 
       <Link to={`/cadastro`}>
-      <LinkToSignUp>Não tem uma conta? Cadastre-se!</LinkToSignUp>
+        <LinkToSignUp>Não tem uma conta? Cadastre-se!</LinkToSignUp>
       </Link>
     </LoginWrapper>
   );
 }
 
 const LogoImg = styled.img`
-    width: 180px;
-    margin: 68px auto 33px auto;
-`
+  width: 180px;
+  margin: 68px auto 33px auto;
+`;
 
 const LoginWrapper = styled.div`
   display: flex;
@@ -41,7 +60,6 @@ const LoginForm = styled.form`
 const LoginInput = styled.input`
   font-family: "Lexend Deca", sans-serif;
   font-size: 20px;
-  color: #dbdbdb;
   padding-left: 11px;
   width: 303px;
   height: 45px;
@@ -71,4 +89,11 @@ const LinkToSignUp = styled.p`
   text-decoration-line: underline;
 `;
 
-export {LogoImg, LoginBttn, LoginForm, LoginInput, LoginWrapper, LinkToSignUp}
+export {
+  LogoImg,
+  LoginBttn,
+  LoginForm,
+  LoginInput,
+  LoginWrapper,
+  LinkToSignUp,
+};
