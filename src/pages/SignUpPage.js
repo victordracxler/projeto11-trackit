@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import logo from "../imgs/Group8.png";
 import {
@@ -17,6 +17,7 @@ export default function SignUpPage() {
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [image, setImage] = useState("");
+  const navigate = useNavigate();
 
   function handleSignUp(e) {
     e.preventDefault();
@@ -34,11 +35,13 @@ export default function SignUpPage() {
     const promise = axios.post(url, body)
     .then(res => {
         alert('cadastrado com sucesso')
-        console.log(res)
+        console.log(res.data)
+        navigate('/')
+        
     })
     .catch(err => {
         console.log(err);
-        alert(err.response.data)
+        alert(err.response.data.message)
     })
   }
 
