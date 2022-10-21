@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import logo from "../imgs/Group8.png";
 
@@ -13,7 +14,9 @@ export default function LoginPage() {
         <LoginBttn type="submit">Entrar</LoginBttn>
       </LoginForm>
 
+      <Link to={`/cadastro`}>
       <LinkToSignUp>Não tem uma conta? Cadastre-se!</LinkToSignUp>
+      </Link>
     </LoginWrapper>
   );
 }
@@ -67,3 +70,5 @@ const LinkToSignUp = styled.p`
   text-align: center;
   text-decoration-line: underline;
 `;
+
+export {LogoImg, LoginBttn, LoginForm, LoginInput, LoginWrapper, LinkToSignUp}
