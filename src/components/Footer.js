@@ -1,15 +1,17 @@
 import React, { useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import UserContext from "../context/User";
 
 export default function Footer() {
   const { user, setUser } = useContext(UserContext);
+  const navigate = useNavigate();
 
   return (
     <FooterBar>
-      <div>Habitos</div>
+      <div onClick={() => navigate('/habitos')}>Habitos</div>
       <div className="center"></div>
-      <div className="botaoteste">Hoje</div>
+      <div className="today-bttn" onClick={() => navigate('/hoje')}>Hoje</div>
       <div>Histórico</div>
     </FooterBar>
   );
@@ -46,7 +48,7 @@ const FooterBar = styled.div`
     background-color: #ffffff;
   }
 
-  .botaoteste {
+  .today-bttn {
     position: absolute;
     bottom: 0;
     left: calc(50% - (91px / 2));

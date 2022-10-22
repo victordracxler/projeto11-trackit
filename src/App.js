@@ -6,6 +6,7 @@ import { UserProvider } from "./context/User";
 import LoginPage from "./pages/LoginPage"
 import SignUpPage from "./pages/SignUpPage";
 import TodayPage from "./pages/TodayPage";
+import HabitsPage from "./pages/HabitsPage";
 
 
 export default function App() {
@@ -17,6 +18,7 @@ export default function App() {
         <Route path="/" element={<LoginPage/>} />
         <Route path="/cadastro" element={<SignUpPage/>} />
         <Route path="/hoje" element={<TodayPage />} />
+        <Route path="/habitos" element={<HabitsPage />} />
       </Routes>
     </BrowserRouter>
     </UserProvider>
