@@ -1,11 +1,37 @@
 import styled from "styled-components";
 import { BsFillCheckSquareFill } from "react-icons/bs";
 import { IconContext } from "react-icons";
+import axios from "axios";
+import UserContext from "../context/User";
+import { useContext } from "react";
 
 export default function HabitCard(habit) {
+  const { user, refresh, setRefresh } = useContext(UserContext);
   const { id, name, done, currentSequence, highestSequence } = habit;
   const isHighest = currentSequence === highestSequence;
-  
+
+  function handleClick(clickedId, isDone) {
+    const baseUrl =
+      "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/";
+
+    const check = "/check/"
+    const uncheck = "/uncheck/"
+
+    console.log("teste", baseUrl+clickedId+uncheck);
+    if(isDone){
+      axios
+      .post(baseUrl+clickedId+uncheck, clickedId,{ headers: { Authorization:`Bearer ${user.token}` } })
+      .then((res) => console.log("desmarcou"))
+      .catch((err) => console.log(err.response))
+      setRefresh(!refresh)
+    } else{
+      axios
+      .post(baseUrl+clickedId+check, clickedId, { headers: { Authorization:`Bearer ${user.token}` } })
+      .then((res) => console.log("marcou"))
+      .catch((err) => console.log(err.response))
+      setRefresh(!refresh)
+    }
+  }
 
   return (
     <Card key={id} done={done} isHighest={isHighest}>
@@ -17,7 +43,7 @@ export default function HabitCard(habit) {
         Seu recorde: <span className="highest">{highestSequence} dias</span>
       </p>
 
-      <IconContainer>
+      <IconContainer onClick={() => handleClick(id, done)}>
         <IconContext.Provider
           value={{
             color: done ? "#8FC549" : "#E7E7E7",

@@ -10,7 +10,7 @@ import HABITOSHOJE from "../components/mock";
 import HabitCard from "../components/HabitCard";
 
 export default function TodayPage() {
-  const { user, setUser } = useContext(UserContext);
+  const { user, refresh, setRefresh} = useContext(UserContext);
   const [todayHabits, setTodayHabits] = useState([])
 
   const today = dayjs().locale("pt-br").format("dddd, DD/MM");
@@ -23,12 +23,12 @@ export default function TodayPage() {
     const promise = axios
       .get(url, { headers: { Authorization:`Bearer ${user.token}` } })
       .then((response) => {
-       console.log("entrou na today");
+       setTodayHabits(response.data)
       })
       .catch((error) => {
         console.log(error.response.data);
       });
-  }, []);
+  }, [refresh]);
 
   return (
     <>
@@ -41,7 +41,7 @@ export default function TodayPage() {
 
         <HabitsList>
 
-          {HABITOSHOJE.map(HabitCard)}
+          {todayHabits.map(HabitCard)}
         </HabitsList>
       </TodayWrapper>
       <Footer />
@@ -52,11 +52,11 @@ export default function TodayPage() {
 const TodayWrapper = styled.div`
   background-color: #e5e5e5;
   width: 100%;
-  height: 100vh;
+  height: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 98px 17px;
+  padding: 98px 17px 110px 17px;
   font-family: "Lexend Deca", sans-serif;
 `;
 

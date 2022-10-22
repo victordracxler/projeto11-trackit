@@ -28,7 +28,6 @@ export default function MyHabit(habit) {
     axios
       .delete(url, { headers: { Authorization: `Bearer ${user.token}` } })
       .then((res) => {
-        console.log(res.data);
         setRefresh(!refresh)
       })
       .catch((err) => {
