@@ -8,6 +8,7 @@ import UserContext from "../context/User";
 import { BsPlusSquareFill } from "react-icons/bs";
 import { IconContext } from "react-icons";
 import CreateHabitBox from "../components/CreateHabitBox";
+import MyHabit from "../components/MyHabit";
 
 export default function HabitsPage() {
   const { user } = useContext(UserContext);
@@ -54,6 +55,8 @@ export default function HabitsPage() {
             clickCreateHabit={clickCreateHabit}
           />
         )}
+
+            {LISTARHABITOS.map(MyHabit)}
 
         {myHabits.length === 0 && (
           <NoHabitsMessage>

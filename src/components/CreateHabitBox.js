@@ -30,6 +30,11 @@ export default function CreateHabitBox(props) {
     }
   }
 
+  function saveHabit(){
+    const url = "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits"
+
+  }
+
   return (
     <CreateHabit>
       <NameInput
@@ -118,3 +123,5 @@ const WeekWrapper = styled.div`
   display: flex;
   margin-bottom: 29px;
 `;
+
+export {WeekdayBox, WeekWrapper}
