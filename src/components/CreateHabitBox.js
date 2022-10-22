@@ -1,12 +1,15 @@
-import { useState } from "react";
+import axios from "axios";
+import { useContext, useState } from "react";
 import styled from "styled-components";
+import UserContext from "../context/User";
 
 export default function CreateHabitBox(props) {
+  const { user } = useContext(UserContext);
   const weekDay = [0, 1, 2, 3, 4, 5, 6];
   const weekInitials = ["D", "S", "T", "Q", "Q", "S", "S"];
   const [selectedDays, setSelectedDays] = useState([]);
   const [habitName, setHabitName] = useState("");
-  const { setClickCreateHabit, clickCreateHabit } = props;
+  const { setClickCreateHabit, setAddedHabit, addedHabit} = props;
 
   function RenderWeekDays(weekDayNum) {
     const isSelected = selectedDays.includes(weekDayNum);
@@ -30,9 +33,25 @@ export default function CreateHabitBox(props) {
     }
   }
 
-  function saveHabit(){
-    const url = "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits"
+  function saveHabit() {
+    const url =
+      "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits";
+    const body = {
+      name: habitName,
+      days: selectedDays,
+    };
 
+    axios
+      .post(url, body, {
+        headers: { Authorization: `Bearer ${user.token}` },
+      })
+      .then((res) => {
+        console.log(res.data);
+        setAddedHabit(!addedHabit)
+      })
+      .catch((err) => {
+        console.log(err.response.data);
+      });
   }
 
   return (
@@ -57,7 +76,16 @@ export default function CreateHabitBox(props) {
         >
           Cancelar
         </CreateBttn>
-        <CreateBttn color={"#ffffff"} bgColor={"#52B6FF"}>
+        <CreateBttn 
+            color={"#ffffff"} 
+            bgColor={"#52B6FF"} 
+            onClick={() => {
+            saveHabit()
+            setClickCreateHabit(false);
+            setHabitName("");
+            setSelectedDays([])
+
+            }}>
           Salvar
         </CreateBttn>
       </BttnWrapper>
@@ -124,4 +152,4 @@ const WeekWrapper = styled.div`
   margin-bottom: 29px;
 `;
 
-export {WeekdayBox, WeekWrapper}
+export { WeekdayBox, WeekWrapper };

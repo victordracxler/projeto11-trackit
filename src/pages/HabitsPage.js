@@ -14,6 +14,7 @@ export default function HabitsPage() {
   const { user } = useContext(UserContext);
   const [myHabits, setMyHabits] = useState([]);
   const [clickCreateHabit, setClickCreateHabit] = useState(false);
+  const [addedHabit, setAddedHabit] = useState(true)
 
 
   useEffect(() => {
@@ -29,7 +30,7 @@ export default function HabitsPage() {
       .catch((error) => {
         console.log(error.response.data);
       });
-  }, []);
+  }, [addedHabit]);
 
 
   return (
@@ -52,11 +53,12 @@ export default function HabitsPage() {
         {clickCreateHabit && (
           <CreateHabitBox
             setClickCreateHabit={setClickCreateHabit}
-            clickCreateHabit={clickCreateHabit}
+            setAddedHabit={setAddedHabit}
+            addedHabit={addedHabit}
           />
         )}
 
-            {LISTARHABITOS.map(MyHabit)}
+            {myHabits.map(MyHabit)}
 
         {myHabits.length === 0 && (
           <NoHabitsMessage>

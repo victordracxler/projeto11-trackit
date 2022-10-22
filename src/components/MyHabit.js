@@ -5,7 +5,6 @@ import { IconContext } from "react-icons";
 
 
 export default function MyHabit(habit) {
-  console.log(habit);
   const { days, id, name } = habit;
   const weekDay = [0, 1, 2, 3, 4, 5, 6];
 
