@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import "dayjs/locale/pt-br";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import UserContext from "../context/User";
 import axios from "axios";
 import HABITOSHOJE from "../components/mock";
@@ -11,6 +11,7 @@ import HabitCard from "../components/HabitCard";
 
 export default function TodayPage() {
   const { user, setUser } = useContext(UserContext);
+  const [todayHabits, setTodayHabits] = useState([])
 
   const today = dayjs().locale("pt-br").format("dddd, DD/MM");
   const maiusc = today[0].toUpperCase() + today.substring(1);
