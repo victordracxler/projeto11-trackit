@@ -9,11 +9,13 @@ import { BsPlusSquareFill } from "react-icons/bs";
 import { IconContext } from "react-icons";
 
 export default function HabitsPage() {
-  const { user, setUser } = useContext(UserContext);
+  const { user } = useContext(UserContext);
   const [myHabits, setMyHabits] = useState([]);
   const weekDay = [0, 1, 2, 3, 4, 5, 6];
   const weekInitials = ["D", "S", "T", "Q", "Q", "S", "S"];
   const [selectedDays, setSelectedDays] = useState([]);
+  const [clickCreateHabit, setClickCreateHabit] = useState(false);
+  const [habitName, setHabitName] = useState("");
 
   useEffect(() => {
     const url =
@@ -65,20 +67,42 @@ export default function HabitsPage() {
               size: "35px",
             }}
           >
-            <BsPlusSquareFill />
+            <BsPlusSquareFill onClick={() => setClickCreateHabit(true)} />
           </IconContext.Provider>
         </TitleContainer>
 
-        <CreateHabit>
-          <NameInput type="text" placeholder="nome do hábito" />
+        {clickCreateHabit && (
+          <CreateHabit>
+            <NameInput
+              type="text"
+              placeholder="nome do hábito"
+              onChange={(e) => setHabitName(e.target.value)}
+            />
 
-          <WeekWrapper>{weekDay.map(RenderWeekDays)}</WeekWrapper>
+            <WeekWrapper>{weekDay.map(RenderWeekDays)}</WeekWrapper>
 
-          <BttnWrapper>
-            <button>Cancelar</button>
-            <button>Salvar</button>
-          </BttnWrapper>
-        </CreateHabit>
+            <BttnWrapper>
+              <CreateBttn color={"#52B6FF"} bgColor={"#ffffff"}
+              onClick={() =>{
+                setClickCreateHabit(false)
+                setHabitName('')
+                setSelectedDays([])
+              }}>
+                Cancelar
+              </CreateBttn>
+              <CreateBttn color={"#ffffff"} bgColor={"#52B6FF"}>
+                Salvar
+              </CreateBttn>
+            </BttnWrapper>
+          </CreateHabit>
+        )}
+
+        {myHabits.length === 0 && (
+          <NoHabitsMessage>
+            Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para
+            começar a trackear!
+          </NoHabitsMessage>
+        )}
       </HabitsWrapper>
       <Footer />
     </>
@@ -133,7 +157,18 @@ const BttnWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-end;
+`;
 
+const CreateBttn = styled.button`
+  border: none;
+  border-radius: 5px;
+  width: 84px;
+  height: 35px;
+  margin-left: 5px;
+  font-family: "Lexend Deca", sans-serif;
+  font-size: 16px;
+  color: ${(props) => props.color};
+  background-color: ${(props) => props.bgColor};
 `;
 
 const WeekdayBox = styled.div`
@@ -155,4 +190,12 @@ const WeekdayBox = styled.div`
 const WeekWrapper = styled.div`
   display: flex;
   margin-bottom: 29px;
+`;
+
+const NoHabitsMessage = styled.p`
+  width: 338px;
+  font-size: 18px;
+  color: #666666;
+  margin-top: 29px;
+  line-height: 22px;
 `;
