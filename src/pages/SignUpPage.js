@@ -35,7 +35,6 @@ export default function SignUpPage() {
     const promise = axios.post(url, body)
     .then(res => {
         alert('cadastrado com sucesso')
-        console.log(res.data)
         navigate('/')
         
     })
