@@ -4,12 +4,12 @@ import styled from "styled-components";
 import UserContext from "../context/User";
 
 export default function CreateHabitBox(props) {
-  const { user } = useContext(UserContext);
+  const { user, refresh, setRefresh } = useContext(UserContext);
   const weekDay = [0, 1, 2, 3, 4, 5, 6];
   const weekInitials = ["D", "S", "T", "Q", "Q", "S", "S"];
   const [selectedDays, setSelectedDays] = useState([]);
   const [habitName, setHabitName] = useState("");
-  const { setClickCreateHabit, setAddedHabit, addedHabit} = props;
+  const { setClickCreateHabit} = props;
 
   function RenderWeekDays(weekDayNum) {
     const isSelected = selectedDays.includes(weekDayNum);
@@ -47,10 +47,10 @@ export default function CreateHabitBox(props) {
       })
       .then((res) => {
         console.log(res.data);
-        setAddedHabit(!addedHabit)
+        setRefresh(!refresh)
       })
       .catch((err) => {
-        console.log(err.response.data);
+        console.log(err.response);
       });
   }
 

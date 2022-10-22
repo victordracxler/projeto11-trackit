@@ -11,11 +11,9 @@ import CreateHabitBox from "../components/CreateHabitBox";
 import MyHabit from "../components/MyHabit";
 
 export default function HabitsPage() {
-  const { user } = useContext(UserContext);
+  const { user, refresh, setRefresh } = useContext(UserContext);
   const [myHabits, setMyHabits] = useState([]);
   const [clickCreateHabit, setClickCreateHabit] = useState(false);
-  const [addedHabit, setAddedHabit] = useState(true)
-
 
   useEffect(() => {
     const url =
@@ -24,14 +22,12 @@ export default function HabitsPage() {
     const promise = axios
       .get(url, { headers: { Authorization: `Bearer ${user.token}` } })
       .then((response) => {
-        console.log(response.data);
         setMyHabits(response.data);
       })
       .catch((error) => {
         console.log(error.response.data);
       });
-  }, [addedHabit]);
-
+  }, [refresh]);
 
   return (
     <>
@@ -53,12 +49,12 @@ export default function HabitsPage() {
         {clickCreateHabit && (
           <CreateHabitBox
             setClickCreateHabit={setClickCreateHabit}
-            setAddedHabit={setAddedHabit}
-            addedHabit={addedHabit}
+            setrefresh={setRefresh}
+            refresh={refresh}
           />
         )}
 
-            {myHabits.map(MyHabit)}
+        {myHabits.map(MyHabit)}
 
         {myHabits.length === 0 && (
           <NoHabitsMessage>
@@ -75,11 +71,11 @@ export default function HabitsPage() {
 const HabitsWrapper = styled.div`
   background-color: #e5e5e5;
   width: 100%;
-  height: 100vh;
+  height: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 98px 17px;
+  padding: 98px 17px 110px 17px;
   font-family: "Lexend Deca", sans-serif;
 `;
 

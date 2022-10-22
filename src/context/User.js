@@ -4,6 +4,7 @@ const UserContext = createContext();
 
 function UserProvider({ children }) {
   const [user, setUser] = useState("");
+  const [refresh, setRefresh] = useState(true)
 
   useEffect(() => {
     const userStorage = localStorage.getItem("user");
@@ -15,7 +16,7 @@ function UserProvider({ children }) {
   }, []);
 
   return (
-    <UserContext.Provider value={{ user, setUser }}>
+    <UserContext.Provider value={{ user, setUser, refresh, setRefresh }}>
       {children}
     </UserContext.Provider>
   );

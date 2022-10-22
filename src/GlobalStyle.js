@@ -55,6 +55,9 @@ table {
 	border-spacing: 0;
 }
 
+body{
+	background-color: #e5e5e5;
+}
 
 `
 

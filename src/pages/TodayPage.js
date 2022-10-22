@@ -23,7 +23,7 @@ export default function TodayPage() {
     const promise = axios
       .get(url, { headers: { Authorization:`Bearer ${user.token}` } })
       .then((response) => {
-        console.log(response.data);
+       console.log("entrou na today");
       })
       .catch((error) => {
         console.log(error.response.data);
