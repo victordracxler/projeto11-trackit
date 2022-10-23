@@ -9,7 +9,7 @@ import axios from "axios";
 import HabitCard from "../components/HabitCard";
 
 export default function TodayPage() {
-  const { user, refresh} = useContext(UserContext);
+  const { user, refresh, todayPercent, setTodayPercent} = useContext(UserContext);
   const [todayHabits, setTodayHabits] = useState([])
 
   const today = dayjs().locale("pt-br").format("dddd, DD/MM");
@@ -39,14 +39,15 @@ export default function TodayPage() {
     
     })
     const percent = Math.round((doneHabits/total)*100)
+    setTodayPercent(percent)
 
-    if(percent === 0){
+    if(percent === 0 || percent == NaN){
       return(
         <p>Nenhum hábito concluído ainda</p>
       )
     } else{
       return(
-        <p className="green">{percent}% dos hábitos concluídos</p>
+        <p className="green">{todayPercent}% dos hábitos concluídos</p>
       )
     }
   }

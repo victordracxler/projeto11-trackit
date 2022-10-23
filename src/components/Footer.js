@@ -2,17 +2,32 @@ import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import UserContext from "../context/User";
+import { buildStyles, CircularProgressbar } from "react-circular-progressbar";
+import "react-circular-progressbar/dist/styles.css";
 
 export default function Footer() {
-  const { user, setUser } = useContext(UserContext);
+  const { todayPercent, setTodayPercent } = useContext(UserContext);
   const navigate = useNavigate();
 
   return (
     <FooterBar>
-      <div onClick={() => navigate('/habitos')}>Habitos</div>
+      <div onClick={() => navigate("/habitos")}>Habitos</div>
       <div className="center"></div>
-      <div className="today-bttn" onClick={() => navigate('/hoje')}>Hoje</div>
-      <div onClick={() => navigate('/historico')}>Histórico</div>
+      <div className="today-bttn" onClick={() => navigate("/hoje")}>
+      <CircularProgressbar
+        value={todayPercent}
+        text="Hoje"
+        background
+        backgroundPadding={6}
+        styles={buildStyles({
+          backgroundColor: "#52b6ff",
+          textColor: "#fff",
+          pathColor: "#fff",
+          trailColor: "transparent"
+        })}
+      />
+      </div>
+      <div onClick={() => navigate("/historico")}>Histórico</div>
     </FooterBar>
   );
 }
@@ -36,7 +51,7 @@ const FooterBar = styled.div`
     width: calc(50% - (91px / 2));
     height: 70px;
     background-color: #ffffff;
-    color: #52B6FF;
+    color: #52b6ff;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -55,7 +70,7 @@ const FooterBar = styled.div`
     width: 91px;
     height: 91px;
 
-    background-color: #52B6FF;
+    background-color: #52b6ff;
     color: #ffffff;
     display: flex;
     align-items: center;
