@@ -12,7 +12,7 @@ export default function Footer() {
       <div onClick={() => navigate('/habitos')}>Habitos</div>
       <div className="center"></div>
       <div className="today-bttn" onClick={() => navigate('/hoje')}>Hoje</div>
-      <div>Histórico</div>
+      <div onClick={() => navigate('/historico')}>Histórico</div>
     </FooterBar>
   );
 }

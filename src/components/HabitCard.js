@@ -17,7 +17,6 @@ export default function HabitCard(habit) {
     const check = "/check/"
     const uncheck = "/uncheck/"
 
-    console.log("teste", baseUrl+clickedId+uncheck);
     if(isDone){
       axios
       .post(baseUrl+clickedId+uncheck, clickedId,{ headers: { Authorization:`Bearer ${user.token}` } })

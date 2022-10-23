@@ -6,7 +6,6 @@ import "dayjs/locale/pt-br";
 import { useContext, useEffect, useState } from "react";
 import UserContext from "../context/User";
 import axios from "axios";
-import HABITOSHOJE from "../components/mock";
 import HabitCard from "../components/HabitCard";
 
 export default function TodayPage() {

@@ -3,7 +3,6 @@ import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
-import { LISTARHABITOS } from "../components/mock";
 import UserContext from "../context/User";
 import { BsPlusSquareFill } from "react-icons/bs";
 import { IconContext } from "react-icons";
@@ -99,3 +98,5 @@ const NoHabitsMessage = styled.p`
   margin-top: 29px;
   line-height: 22px;
 `;
+
+export {HabitsWrapper, TitleContainer, NoHabitsMessage}

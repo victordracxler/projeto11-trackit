@@ -11,6 +11,12 @@ export default function LoginPage() {
   const { user, setUser } = useContext(UserContext);
   const navigate = useNavigate();
 
+  const userStorage = localStorage.getItem("user");
+  if (userStorage){
+    navigate('/hoje')
+  }
+
+
   function handleLogin(e) {
     e.preventDefault();
 
