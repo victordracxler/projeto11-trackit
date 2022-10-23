@@ -9,7 +9,7 @@ import axios from "axios";
 import HabitCard from "../components/HabitCard";
 
 export default function TodayPage() {
-  const { user, refresh, setRefresh} = useContext(UserContext);
+  const { user, refresh} = useContext(UserContext);
   const [todayHabits, setTodayHabits] = useState([])
 
   const today = dayjs().locale("pt-br").format("dddd, DD/MM");
@@ -28,6 +28,28 @@ export default function TodayPage() {
         console.log(error.response.data);
       });
   }, [refresh]);
+  
+  function Counter(){
+    let total = 0
+    let doneHabits = 0
+
+    todayHabits.forEach((habit)=> {
+      total++
+      habit.done && doneHabits++
+    
+    })
+    const percent = Math.round((doneHabits/total)*100)
+
+    if(percent === 0){
+      return(
+        <p>Nenhum hábito concluído ainda</p>
+      )
+    } else{
+      return(
+        <p className="green">{percent}% dos hábitos concluídos</p>
+      )
+    }
+  }
 
   return (
     <>
@@ -35,7 +57,7 @@ export default function TodayPage() {
       <TodayWrapper>
         <TitleContainer>
           <h1>{maiusc}</h1>
-          <p>Nenhum hábito concluído ainda</p>
+          <Counter/>
         </TitleContainer>
 
         <HabitsList>
@@ -76,5 +98,8 @@ const TitleContainer = styled.div`
     color: #BABABA;
     font-size: 18px;
     line-height: 22px;
+  }
+  .green{
+    color: #8FC549;
   }
 `
