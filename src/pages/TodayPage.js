@@ -18,11 +18,11 @@ export default function TodayPage() {
 
     if(todayPercent === 0 || todayPercent == NaN){
       return(
-        <p>Nenhum hábito concluído ainda</p>
+        <p data-identifier="today-infos">Nenhum hábito concluído ainda</p>
       )
     } else{
       return(
-        <p className="green">{todayPercent}% dos hábitos concluídos</p>
+        <p data-identifier="today-infos" className="green">{todayPercent}% dos hábitos concluídos</p>
       )
     }
   }
@@ -32,7 +32,7 @@ export default function TodayPage() {
       <Header />
       <TodayWrapper>
         <TitleContainer>
-          <h1>{maiusc}</h1>
+          <h1 data-identifier="today-infos">{maiusc}</h1>
           <Counter/>
         </TitleContainer>
 

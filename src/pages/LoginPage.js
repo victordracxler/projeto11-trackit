@@ -77,6 +77,7 @@ export default function LoginPage() {
 
       <LoginForm onSubmit={handleLogin}>
         <LoginInput
+          data-identifier="input-email"
           type="email"
           placeholder="email"
           value={email}
@@ -85,6 +86,7 @@ export default function LoginPage() {
           disabled={isLoading}
         />
         <LoginInput
+          data-identifier="input-password"
           type="password"
           placeholder="senha"
           value={password}
@@ -92,14 +94,18 @@ export default function LoginPage() {
           required
           disabled={isLoading}
         />
-        <LoginBttn type="submit" disabled={isLoading}>
+        <LoginBttn
+          data-identifier="login-btn"
+          type="submit"
+          disabled={isLoading}
+        >
           <LoadingRequest />
         </LoginBttn>
       </LoginForm>
-      
+
       <ToastContainer />
-      <Link to={`/cadastro`}>
-        <LinkToSignUp>Não tem uma conta? Cadastre-se!</LinkToSignUp>
+      <Link data-identifier="sign-up-action" to={`/cadastro`}>
+        <LinkToSignUp >Não tem uma conta? Cadastre-se!</LinkToSignUp>
       </Link>
     </LoginWrapper>
   );

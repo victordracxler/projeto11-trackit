@@ -43,7 +43,7 @@ export default function HabitsPage() {
               size: "35px",
             }}
           >
-            <BsPlusSquareFill onClick={() => setClickCreateHabit(true)} />
+            <BsPlusSquareFill data-identifier="create-habit-btn" onClick={() => setClickCreateHabit(true)} />
           </IconContext.Provider>
         </TitleContainer>
 
@@ -60,7 +60,7 @@ export default function HabitsPage() {
         {myHabits.map(MyHabit)}
 
         {myHabits.length === 0 && (
-          <NoHabitsMessage>
+          <NoHabitsMessage data-identifier="no-habit-message">
             Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para
             começar a trackear!
           </NoHabitsMessage>

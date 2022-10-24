@@ -75,6 +75,7 @@ export default function SignUpPage() {
 
       <LoginForm onSubmit={handleSignUp}>
         <LoginInput
+        data-identifier="input-email"
           type="email"
           placeholder="email"
           value={email}
@@ -83,8 +84,9 @@ export default function SignUpPage() {
           disabled={isLoading}
         />
         <LoginInput
+        data-identifier="input-password"
           type="password"
-          placeholder="password"
+          placeholder="senha"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
@@ -92,13 +94,15 @@ export default function SignUpPage() {
         />
         <LoginInput
           type="text"
-          placeholder="name"
+          data-identifier="input-name"
+          placeholder="nome"
           value={name}
           onChange={(e) => setName(e.target.value)}
           required
           disabled={isLoading}
         />
         <LoginInput
+        data-identifier="input-photo"
           type="url"
           placeholder="foto"
           value={image}
@@ -112,7 +116,7 @@ export default function SignUpPage() {
       </LoginForm>
       <ToastContainer />
 
-      <Link to={`/`}>
+      <Link data-identifier="back-to-login-action" to={`/`}>
         <LinkToSignUp>Já tem uma conta? Faça login!</LinkToSignUp>
       </Link>
     </LoginWrapper>

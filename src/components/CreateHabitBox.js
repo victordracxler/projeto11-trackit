@@ -10,7 +10,13 @@ export default function CreateHabitBox(props) {
   const { user, refresh, setRefresh } = useContext(UserContext);
   const weekDay = [0, 1, 2, 3, 4, 5, 6];
   const weekInitials = ["D", "S", "T", "Q", "Q", "S", "S"];
-  const { setClickCreateHabit, selectedDays, setSelectedDays, habitName, setHabitName} = props;
+  const {
+    setClickCreateHabit,
+    selectedDays,
+    setSelectedDays,
+    habitName,
+    setHabitName,
+  } = props;
   const [isLoading, setIsLoading] = useState(false);
 
   function RenderWeekDays(weekDayNum) {
@@ -18,6 +24,7 @@ export default function CreateHabitBox(props) {
 
     return (
       <WeekdayBox
+        data-identifier="week-day-btn"
         onClick={() => clickDay(weekDayNum)}
         disabled={isLoading}
         isSelected={isSelected}
@@ -73,23 +80,24 @@ export default function CreateHabitBox(props) {
         headers: { Authorization: `Bearer ${user.token}` },
       })
       .then((res) => {
-        toast("Hábito criado com sucesso!")
+        toast("Hábito criado com sucesso!");
         setClickCreateHabit(false);
         setHabitName("");
         setSelectedDays([]);
         setRefresh(!refresh);
-        setIsLoading(false)
-        toast("Hábito criado com sucesso!")
+        setIsLoading(false);
+        toast("Hábito criado com sucesso!");
       })
       .catch((err) => {
         toast(err.response.data.message);
-        setIsLoading(false)
+        setIsLoading(false);
       });
   }
 
   return (
     <CreateHabit>
       <NameInput
+        data-identifier="input-habit-name"
         type="text"
         placeholder="nome do hábito"
         disabled={isLoading}
@@ -102,17 +110,17 @@ export default function CreateHabitBox(props) {
 
       <BttnWrapper>
         <CreateBttn
+          data-identifier="cancel-habit-create-btn"
           color={"#52B6FF"}
           bgColor={"#ffffff"}
           onClick={() => {
             setClickCreateHabit(false);
-            // setHabitName("");
-            // setSelectedDays([]);
           }}
         >
           Cancelar
         </CreateBttn>
         <CreateBttn
+        data-identifier="save-habit-create-btn"
           color={"#ffffff"}
           bgColor={"#52B6FF"}
           disabled={isLoading}

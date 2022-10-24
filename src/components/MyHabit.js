@@ -30,7 +30,7 @@ export default function MyHabit(habit) {
     });
   }
 
-  function RenderWeekDays(weekDayNum) {
+  function RenderWeekDaysNoClick(weekDayNum) {
     const weekInitials = ["D", "S", "T", "Q", "Q", "S", "S"];
     const isSelected = days.includes(weekDayNum);
 
@@ -55,10 +55,10 @@ export default function MyHabit(habit) {
   }
   return (
     <MyHabitCard key={id}>
-      <h1>{name}</h1>
-      <WeekWrapper>{weekDay.map(RenderWeekDays)}</WeekWrapper>
+      <h1 data-identifier="habit-name">{name}</h1>
+      <WeekWrapper>{weekDay.map(RenderWeekDaysNoClick)}</WeekWrapper>
 
-      <TrashWrapper onClick={() => submit(id)}>
+      <TrashWrapper data-identifier="delete-habit-btn" onClick={() => submit(id)}>
         <IconContext.Provider
           value={{
             color: "#666666",

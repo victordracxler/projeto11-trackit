@@ -11,7 +11,7 @@ export default function Footer() {
 
   return (
     <FooterBar>
-      <div onClick={() => navigate("/habitos")}>Habitos</div>
+      <div data-identifier="habit-page-action" onClick={() => navigate("/habitos")}>Habitos</div>
       <div className="center"></div>
       <div className="today-bttn" onClick={() => navigate("/hoje")}>
       <CircularProgressbar
@@ -27,7 +27,7 @@ export default function Footer() {
         })}
       />
       </div>
-      <div onClick={() => navigate("/historico")}>Histórico</div>
+      <div data-identifier="historic-page-action" onClick={() => navigate("/historico")}>Histórico</div>
     </FooterBar>
   );
 }

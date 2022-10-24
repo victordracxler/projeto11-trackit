@@ -33,7 +33,7 @@ export default function HabitCard(habit) {
   }
 
   return (
-    <Card key={id} done={done} isHighest={isHighest}>
+    <Card data-identifier="today-infos" key={id} done={done} isHighest={isHighest}>
       <h1>{name}</h1>
       <p>
         Sequência atual: <span className="current">{currentSequence} dias</span>
@@ -42,7 +42,7 @@ export default function HabitCard(habit) {
         Seu recorde: <span className="highest">{highestSequence} dias</span>
       </p>
 
-      <IconContainer onClick={() => handleClick(id, done)}>
+      <IconContainer data-identifier="done-habit-btn" onClick={() => handleClick(id, done)}>
         <IconContext.Provider
           value={{
             color: done ? "#8FC549" : "#E7E7E7",
