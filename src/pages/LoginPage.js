@@ -5,15 +5,15 @@ import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import UserContext from "../context/User";
 import logo from "../imgs/Group8.png";
-import { ToastContainer, toast } from 'react-toastify';
-  import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { user, setUser } = useContext(UserContext);
   const navigate = useNavigate();
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false);
 
   const userStorage = localStorage.getItem("user");
   if (userStorage) {
@@ -22,7 +22,7 @@ export default function LoginPage() {
 
   function handleLogin(e) {
     e.preventDefault();
-    setIsLoading(true)
+    setIsLoading(true);
 
     const url =
       "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login";
@@ -48,27 +48,26 @@ export default function LoginPage() {
       })
       .catch((err) => {
         toast(err.response.data.message);
-        setIsLoading(false)
+        setIsLoading(false);
       });
   }
 
-  function LoadingRequest(){
-
-    if(isLoading){
-      return(
+  function LoadingRequest() {
+    if (isLoading) {
+      return (
         <ThreeDots
-            height="45"
-            width="45"
-            radius="15"
-            color="#ffffff"
-            ariaLabel="three-dots-loading"
-            wrapperStyle={{}}
-            wrapperClassName=""
-            visible={true}
-          />
-      )
-    } else{
-      return "Entrar"
+          height="45"
+          width="45"
+          radius="15"
+          color="#ffffff"
+          ariaLabel="three-dots-loading"
+          wrapperStyle={{}}
+          wrapperClassName=""
+          visible={true}
+        />
+      );
+    } else {
+      return "Entrar";
     }
   }
 
@@ -94,9 +93,9 @@ export default function LoginPage() {
           disabled={isLoading}
         />
         <LoginBttn type="submit" disabled={isLoading}>
-          <LoadingRequest/>
+          <LoadingRequest />
         </LoginBttn>
-        <ToastContainer/>
+        <ToastContainer />
       </LoginForm>
 
       <Link to={`/cadastro`}>
@@ -147,7 +146,7 @@ const LoginBttn = styled.button`
   border-radius: 5px;
   border: none;
   margin-bottom: 25px;
-  display:flex;
+  display: flex;
   justify-content: center;
   align-items: center;
 `;

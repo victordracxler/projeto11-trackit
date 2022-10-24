@@ -11,6 +11,9 @@ import {
   LoginWrapper,
   LinkToSignUp,
 } from "./LoginPage";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { ThreeDots } from "react-loader-spinner";
 
 export default function SignUpPage() {
   const [email, setEmail] = useState("");
@@ -18,30 +21,52 @@ export default function SignUpPage() {
   const [name, setName] = useState("");
   const [image, setImage] = useState("");
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
 
   function handleSignUp(e) {
     e.preventDefault();
+    setIsLoading(true);
 
     const url =
       "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up";
-    
-      const body = {
+
+    const body = {
       email: email,
       name: name,
       image: image,
       password: password,
     };
 
-    const promise = axios.post(url, body)
-    .then(res => {
-        alert('cadastrado com sucesso')
-        navigate('/')
-        
-    })
-    .catch(err => {
+    const promise = axios
+      .post(url, body)
+      .then((res) => {
+        toast("cadastrado com sucesso");
+        navigate("/");
+      })
+      .catch((err) => {
         console.log(err);
-        alert(err.response.data.message)
-    })
+        toast(err.response.data.message);
+        setIsLoading(false);
+      });
+  }
+
+  function LoadingRequest() {
+    if (isLoading) {
+      return (
+        <ThreeDots
+          height="45"
+          width="45"
+          radius="15"
+          color="#ffffff"
+          ariaLabel="three-dots-loading"
+          wrapperStyle={{}}
+          wrapperClassName=""
+          visible={true}
+        />
+      );
+    } else {
+      return "Cadastrar";
+    }
   }
 
   return (
@@ -55,24 +80,37 @@ export default function SignUpPage() {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
+          disabled={isLoading}
         />
-        <LoginInput type="password"
+        <LoginInput
+          type="password"
           placeholder="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          required />
-        <LoginInput type="text"
+          required
+          disabled={isLoading}
+        />
+        <LoginInput
+          type="text"
           placeholder="name"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          required />
-        <LoginInput type="url"
+          required
+          disabled={isLoading}
+        />
+        <LoginInput
+          type="url"
           placeholder="foto"
           value={image}
           onChange={(e) => setImage(e.target.value)}
-          required />
-        <LoginBttn type="submit">Cadastrar</LoginBttn>
+          required
+          disabled={isLoading}
+        />
+        <LoginBttn type="submit" disabled={isLoading}>
+          <LoadingRequest />
+        </LoginBttn>
       </LoginForm>
+      <ToastContainer />
 
       <Link to={`/`}>
         <LinkToSignUp>Já tem uma conta? Faça login!</LinkToSignUp>
