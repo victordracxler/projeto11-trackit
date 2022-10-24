@@ -30,18 +30,18 @@ export default function TodayPage() {
   }, [refresh]);
   
   function Counter(){
-    let total = 0
-    let doneHabits = 0
+    // let total = 0
+    // let doneHabits = 0
 
-    todayHabits.forEach((habit)=> {
-      total++
-      habit.done && doneHabits++
+    // todayHabits.forEach((habit)=> {
+    //   total++
+    //   habit.done && doneHabits++
     
-    })
-    const percent = Math.round((doneHabits/total)*100)
-    setTodayPercent(percent)
+    // })
+    // const percent = Math.round((doneHabits/total)*100)
+    // setTodayPercent(percent)
 
-    if(percent === 0 || percent == NaN){
+    if(todayPercent === 0 || todayPercent == NaN){
       return(
         <p>Nenhum hábito concluído ainda</p>
       )
