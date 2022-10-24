@@ -4,19 +4,11 @@ import { createContext, useEffect, useState } from "react";
 const UserContext = createContext();
 
 function UserProvider({ children }) {
-  const [user, setUser] = useState("");
+  const [user, setUser] = useState(localStorage.getItem("user")? JSON.parse(localStorage.getItem("user")): {});
   const [refresh, setRefresh] = useState(true);
   const [todayPercent, setTodayPercent] = useState(0);
   const [todayContext, setTodayContext] = useState([]);
 
-  useEffect(() => {
-    const userStorage = localStorage.getItem("user");
-    if (userStorage) {
-      setUser(JSON.parse(userStorage));
-    } else {
-      setUser({});
-    }
-  }, []);
 
   useEffect(() => {
     const url =
