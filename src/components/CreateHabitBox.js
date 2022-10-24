@@ -1,7 +1,10 @@
 import axios from "axios";
 import { useContext, useState } from "react";
+import { ThreeDots } from "react-loader-spinner";
 import styled from "styled-components";
 import UserContext from "../context/User";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function CreateHabitBox(props) {
   const { user, refresh, setRefresh } = useContext(UserContext);
@@ -9,13 +12,18 @@ export default function CreateHabitBox(props) {
   const weekInitials = ["D", "S", "T", "Q", "Q", "S", "S"];
   const [selectedDays, setSelectedDays] = useState([]);
   const [habitName, setHabitName] = useState("");
-  const { setClickCreateHabit} = props;
+  const { setClickCreateHabit } = props;
+  const [isLoading, setIsLoading] = useState(false);
 
   function RenderWeekDays(weekDayNum) {
     const isSelected = selectedDays.includes(weekDayNum);
 
     return (
-      <WeekdayBox onClick={() => clickDay(weekDayNum)} isSelected={isSelected}>
+      <WeekdayBox
+        onClick={() => clickDay(weekDayNum)}
+        disabled={isLoading}
+        isSelected={isSelected}
+      >
         {weekInitials[weekDayNum]}
       </WeekdayBox>
     );
@@ -33,7 +41,28 @@ export default function CreateHabitBox(props) {
     }
   }
 
+  function LoadingRequest() {
+    if (isLoading) {
+      return (
+        <ThreeDots
+          height="45"
+          width="45"
+          radius="15"
+          color="#ffffff"
+          ariaLabel="three-dots-loading"
+          wrapperStyle={{}}
+          wrapperClassName=""
+          visible={true}
+        />
+      );
+    } else {
+      return "Salvar";
+    }
+  }
+
   function saveHabit() {
+    setIsLoading(true);
+
     const url =
       "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits";
     const body = {
@@ -46,10 +75,17 @@ export default function CreateHabitBox(props) {
         headers: { Authorization: `Bearer ${user.token}` },
       })
       .then((res) => {
-        setRefresh(!refresh)
+        toast("Hábito criado com sucesso!")
+        setClickCreateHabit(false);
+        setHabitName("");
+        setSelectedDays([]);
+        setRefresh(!refresh);
+        setIsLoading(false)
+        toast("Hábito criado com sucesso!")
       })
       .catch((err) => {
-        console.log(err.response);
+        toast(err.response.data.message);
+        setIsLoading(false)
       });
   }
 
@@ -58,7 +94,9 @@ export default function CreateHabitBox(props) {
       <NameInput
         type="text"
         placeholder="nome do hábito"
+        disabled={isLoading}
         onChange={(e) => setHabitName(e.target.value)}
+        maxLength="25"
       />
 
       <WeekWrapper>{weekDay.map(RenderWeekDays)}</WeekWrapper>
@@ -75,19 +113,19 @@ export default function CreateHabitBox(props) {
         >
           Cancelar
         </CreateBttn>
-        <CreateBttn 
-            color={"#ffffff"} 
-            bgColor={"#52B6FF"} 
-            onClick={() => {
-            saveHabit()
-            setClickCreateHabit(false);
-            setHabitName("");
-            setSelectedDays([])
-
-            }}>
-          Salvar
+        <CreateBttn
+          color={"#ffffff"}
+          bgColor={"#52B6FF"}
+          disabled={isLoading}
+          onClick={() => {
+            saveHabit();
+          }}
+        >
+          <LoadingRequest />
         </CreateBttn>
       </BttnWrapper>
+
+      <ToastContainer />
     </CreateHabit>
   );
 }
@@ -128,6 +166,9 @@ const CreateBttn = styled.button`
   font-size: 16px;
   color: ${(props) => props.color};
   background-color: ${(props) => props.bgColor};
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const WeekdayBox = styled.div`

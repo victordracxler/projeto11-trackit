@@ -95,9 +95,9 @@ export default function LoginPage() {
         <LoginBttn type="submit" disabled={isLoading}>
           <LoadingRequest />
         </LoginBttn>
-        <ToastContainer />
       </LoginForm>
-
+      
+      <ToastContainer />
       <Link to={`/cadastro`}>
         <LinkToSignUp>Não tem uma conta? Cadastre-se!</LinkToSignUp>
       </Link>

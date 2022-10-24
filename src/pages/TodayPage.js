@@ -9,37 +9,12 @@ import axios from "axios";
 import HabitCard from "../components/HabitCard";
 
 export default function TodayPage() {
-  const { user, refresh, todayPercent, setTodayPercent} = useContext(UserContext);
-  const [todayHabits, setTodayHabits] = useState([])
-
+  const { todayPercent, todayContext} = useContext(UserContext);
+  
   const today = dayjs().locale("pt-br").format("dddd, DD/MM");
   const maiusc = today[0].toUpperCase() + today.substring(1);
-
-  useEffect(() => {
-    const url =
-      "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today";
-
-    const promise = axios
-      .get(url, { headers: { Authorization:`Bearer ${user.token}` } })
-      .then((response) => {
-       setTodayHabits(response.data)
-      })
-      .catch((error) => {
-        console.log(error.response.data);
-      });
-  }, [refresh]);
   
-  function Counter(){
-    // let total = 0
-    // let doneHabits = 0
-
-    // todayHabits.forEach((habit)=> {
-    //   total++
-    //   habit.done && doneHabits++
-    
-    // })
-    // const percent = Math.round((doneHabits/total)*100)
-    // setTodayPercent(percent)
+  function Counter(){    
 
     if(todayPercent === 0 || todayPercent == NaN){
       return(
@@ -63,7 +38,7 @@ export default function TodayPage() {
 
         <HabitsList>
 
-          {todayHabits.map(HabitCard)}
+          {todayContext.map(HabitCard)}
         </HabitsList>
       </TodayWrapper>
       <Footer />
