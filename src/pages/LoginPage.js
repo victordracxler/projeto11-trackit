@@ -1,51 +1,75 @@
 import axios from "axios";
 import React, { useContext, useState } from "react";
+import { ThreeDots } from "react-loader-spinner";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import UserContext from "../context/User";
 import logo from "../imgs/Group8.png";
+import { ToastContainer, toast } from 'react-toastify';
+  import 'react-toastify/dist/ReactToastify.css';
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { user, setUser } = useContext(UserContext);
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false)
 
   const userStorage = localStorage.getItem("user");
-  if (userStorage){
-    navigate('/hoje')
+  if (userStorage) {
+    navigate("/hoje");
   }
-
 
   function handleLogin(e) {
     e.preventDefault();
+    setIsLoading(true)
 
     const url =
       "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login";
-    
-      const body = {
+
+    const body = {
       email: email,
       password: password,
     };
 
-    const promise = axios.post(url, body)
-    .then(res => {
-        const newObj =  {
-            id: res.data.id,
-            name: res.data.name,
-            image: res.data.image,
-            email: res.data.email,
-            token: res.data.token,
-        }
-        setUser(newObj)
+    const promise = axios
+      .post(url, body)
+      .then((res) => {
+        const newObj = {
+          id: res.data.id,
+          name: res.data.name,
+          image: res.data.image,
+          email: res.data.email,
+          token: res.data.token,
+        };
+        setUser(newObj);
         localStorage.setItem("user", JSON.stringify(newObj));
-        navigate('/hoje')
+        navigate("/hoje");
+      })
+      .catch((err) => {
+        toast(err.response.data.message);
+        setIsLoading(false)
+      });
+  }
 
-    })
-    .catch(err => {
-        alert(err.response.data.message)
-    })
-    
+  function LoadingRequest(){
+
+    if(isLoading){
+      return(
+        <ThreeDots
+            height="45"
+            width="45"
+            radius="15"
+            color="#ffffff"
+            ariaLabel="three-dots-loading"
+            wrapperStyle={{}}
+            wrapperClassName=""
+            visible={true}
+          />
+      )
+    } else{
+      return "Entrar"
+    }
   }
 
   return (
@@ -59,6 +83,7 @@ export default function LoginPage() {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
+          disabled={isLoading}
         />
         <LoginInput
           type="password"
@@ -66,8 +91,12 @@ export default function LoginPage() {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
+          disabled={isLoading}
         />
-        <LoginBttn type="submit">Entrar</LoginBttn>
+        <LoginBttn type="submit" disabled={isLoading}>
+          <LoadingRequest/>
+        </LoginBttn>
+        <ToastContainer/>
       </LoginForm>
 
       <Link to={`/cadastro`}>
@@ -87,7 +116,7 @@ const LoginWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   height: 100vh;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
 `;
 
 const LoginForm = styled.form`
@@ -118,6 +147,9 @@ const LoginBttn = styled.button`
   border-radius: 5px;
   border: none;
   margin-bottom: 25px;
+  display:flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const LinkToSignUp = styled.p`
