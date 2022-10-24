@@ -5,11 +5,30 @@ import { IconContext } from "react-icons";
 import axios from "axios";
 import UserContext from "../context/User";
 import { useContext } from "react";
+import { confirmAlert } from "react-confirm-alert";
+import "react-confirm-alert/src/react-confirm-alert.css";
 
 export default function MyHabit(habit) {
-  const { user, refresh, setRefresh} = useContext(UserContext);
+  const { user, refresh, setRefresh } = useContext(UserContext);
   const { days, id, name } = habit;
   const weekDay = [0, 1, 2, 3, 4, 5, 6];
+
+  function submit(habitId) {
+    confirmAlert({
+      title: 'Deletar hábito?',
+      message: 'Tem certeza que deseja deletar este hábito?',
+      buttons: [
+        {
+          label: 'Sim',
+          onClick: () => deleteHabit(habitId)
+        },
+        {
+          label: 'Não',
+          onClick: () => console.log('cancelou')
+        }
+      ]
+    });
+  }
 
   function RenderWeekDays(weekDayNum) {
     const weekInitials = ["D", "S", "T", "Q", "Q", "S", "S"];
@@ -28,7 +47,7 @@ export default function MyHabit(habit) {
     axios
       .delete(url, { headers: { Authorization: `Bearer ${user.token}` } })
       .then((res) => {
-        setRefresh(!refresh)
+        setRefresh(!refresh);
       })
       .catch((err) => {
         console.log(err.response.data);
@@ -39,7 +58,7 @@ export default function MyHabit(habit) {
       <h1>{name}</h1>
       <WeekWrapper>{weekDay.map(RenderWeekDays)}</WeekWrapper>
 
-      <TrashWrapper onClick={() => deleteHabit(id)}>
+      <TrashWrapper onClick={() => submit(id)}>
         <IconContext.Provider
           value={{
             color: "#666666",
