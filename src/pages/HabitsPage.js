@@ -10,9 +10,11 @@ import CreateHabitBox from "../components/CreateHabitBox";
 import MyHabit from "../components/MyHabit";
 
 export default function HabitsPage() {
-  const { user, refresh, setRefresh } = useContext(UserContext);
+  const { user, refresh} = useContext(UserContext);
   const [myHabits, setMyHabits] = useState([]);
   const [clickCreateHabit, setClickCreateHabit] = useState(false);
+  const [selectedDays, setSelectedDays] = useState([]);
+  const [habitName, setHabitName] = useState("");
 
   useEffect(() => {
     const url =
@@ -48,8 +50,10 @@ export default function HabitsPage() {
         {clickCreateHabit && (
           <CreateHabitBox
             setClickCreateHabit={setClickCreateHabit}
-            setrefresh={setRefresh}
-            refresh={refresh}
+            habitName={habitName}
+            setHabitName={setHabitName}
+            selectedDays={selectedDays}
+            setSelectedDays={setSelectedDays}
           />
         )}
 

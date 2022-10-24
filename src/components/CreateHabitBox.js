@@ -10,9 +10,7 @@ export default function CreateHabitBox(props) {
   const { user, refresh, setRefresh } = useContext(UserContext);
   const weekDay = [0, 1, 2, 3, 4, 5, 6];
   const weekInitials = ["D", "S", "T", "Q", "Q", "S", "S"];
-  const [selectedDays, setSelectedDays] = useState([]);
-  const [habitName, setHabitName] = useState("");
-  const { setClickCreateHabit } = props;
+  const { setClickCreateHabit, selectedDays, setSelectedDays, habitName, setHabitName} = props;
   const [isLoading, setIsLoading] = useState(false);
 
   function RenderWeekDays(weekDayNum) {
@@ -95,6 +93,7 @@ export default function CreateHabitBox(props) {
         type="text"
         placeholder="nome do hábito"
         disabled={isLoading}
+        value={habitName}
         onChange={(e) => setHabitName(e.target.value)}
         maxLength="25"
       />
@@ -107,8 +106,8 @@ export default function CreateHabitBox(props) {
           bgColor={"#ffffff"}
           onClick={() => {
             setClickCreateHabit(false);
-            setHabitName("");
-            setSelectedDays([]);
+            // setHabitName("");
+            // setSelectedDays([]);
           }}
         >
           Cancelar
